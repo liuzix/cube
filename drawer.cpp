@@ -20,7 +20,7 @@ Drawer::Drawer() : shader("SimpleVertexShader.vertexshader", "SimpleFragmentShad
 }
 
 void Drawer::draw(Cube *cube) {
-    vector<vec3> points;
+    vector<dvec3> points;
     for (auto& p: cube->points) {
         points.push_back(p.position);
     }
@@ -30,10 +30,10 @@ void Drawer::draw(Cube *cube) {
 
     glGenBuffers(1, &this->VBOID);
     glBindBuffer(GL_ARRAY_BUFFER, this->VBOID);
-    glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(vec3), &points[0].x, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(dvec3), &points[0].x, GL_STATIC_DRAW);
     glCheckError();
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, 0, (void*)0);
 
     glDrawElements(GL_TRIANGLES, this->indexBuffer.size(), GL_UNSIGNED_INT, (GLvoid*)0);
     glCheckError();

@@ -11,10 +11,10 @@ const vec3 cubeModel[] = {{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1},
 
 Cube::Cube() {
 
-    const vec3 initPos = {0, 0.5, 0};
-    const float scale = 0.2;
+    const dvec3 initPos = {-0.1, 0.5, 0};
+    const double scale = 0.2;
 
-    for (vec3 offset: cubeModel) {
+    for (dvec3 offset: cubeModel) {
         Point p;
         p.position = offset * scale + initPos;
         p.mass = 0.1;
@@ -61,23 +61,23 @@ vector<GLint> Cube::triangularize() {
 }
 
 void Cube::update() {
-    const float dt = 0.003;
-    vec3 totalA = {0,0,0};
+    const double dt = 0.003;
+    dvec3 totalA = {0,0,0};
     for (Point& pt: points) {
-        vec3 force {0, 0, 0};
+        dvec3 force {0, 0, 0};
         for (Spring* sp: pt.springs) {
-            vec3 dirForce;
+            dvec3 dirForce;
             if (&pt == sp->m1) dirForce = sp->m2->position - sp->m1->position;
             else if (&pt == sp->m2) dirForce = sp->m1->position - sp->m2->position;
             else assert(false);
             force += normalize(dirForce) * sp->currentForce();
         }
-        force += 9.8f * pt.mass * vec3(0, -1, 0);
+        force += 9.8f * pt.mass * dvec3(0, -1, 0);
         if (pt.position.y < 0) {
-            force += vec3(0, -pt.position.y * 20, 0);
+            force += vec3(0, -pt.position.y * 50, 0);
         }
 
-        force -= pt.velocity * 0.15f;
+        force -= pt.velocity * 0.15;
 
         pt.acceleration = force / pt.mass;
         pt.velocity += pt.acceleration * dt;
@@ -86,7 +86,7 @@ void Cube::update() {
         totalA += pt.acceleration;
     }
 
-    cout << (totalA / 8.0f).y << endl;
+    cout << (totalA / 8.0).y << endl;
 
 
 
@@ -94,11 +94,11 @@ void Cube::update() {
 
 }
 
-float Spring::currentLength() {
+double Spring::currentLength() {
     return distance(m1->position, m2->position);
 }
 
-float Spring::currentForce() {
+double Spring::currentForce() {
     //cout << "length diff = " << currentLength() - l0 << endl;
     return (currentLength() - l0) * k;
 }

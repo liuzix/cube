@@ -48,11 +48,11 @@ int main() {
     Cube cube;
     Drawer drawer;
 
-    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)1024/ (float)768, 0.1f, 100.0f);
+    glm::mat4 Projection = glm::ortho(-2.0f,2.0f,-1.5f,1.5f,0.0f,100.0f);;
 
     glm::mat4 View = glm::lookAt(
             glm::vec3(0,0,2),
-            glm::vec3(0,0.25,0),
+            glm::vec3(0,1,0),
             glm::vec3(0,1,0)
     );
 

@@ -15,20 +15,20 @@ using namespace glm;
 struct Point;
 
 struct Spring {
-    float k;
-    float l0;
+    double k;
+    double l0;
     Point* m1;
     Point* m2;
 
-    float currentLength();
-    float currentForce();
+    double currentLength();
+    double currentForce();
 };
 
 struct Point {
-    float mass;
-    vec3 position;
-    vec3 velocity;
-    vec3 acceleration;
+    double mass;
+    dvec3 position;
+    dvec3 velocity;
+    dvec3 acceleration;
     vector<Spring*> springs;
 };
 
